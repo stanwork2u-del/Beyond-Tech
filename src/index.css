@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-space: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply antialiased transition-colors duration-500;
+  }
+  
+  /* Premium Theme (Gold/White) */
+  .theme-premium {
+    @apply bg-[#FAFAFA] text-zinc-900 font-inter;
+    --color-primary: #1A1A1A;
+    --color-secondary: #ffffff;
+    --color-accent: #D5A13E;
+    --color-surface: #ffffff;
+    --color-border: #E5E5E5;
+  }
+
+  /* Cyber Theme (Dark/Gold) */
+  .theme-cyber {
+    @apply bg-[#0a0a0a] text-white font-space;
+    --color-primary: #ffffff;
+    --color-secondary: #171717;
+    --color-accent: #D5A13E;
+    --color-surface: #121212;
+    --color-border: #262626;
+  }
+}
+
+@layer utilities {
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, #FBE3A1 0%, #D5A13E 50%, #A36F15 100%);
+  }
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #D5A13E 0%, #A36F15 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

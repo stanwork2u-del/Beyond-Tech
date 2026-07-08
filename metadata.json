@@ -1,0 +1,6 @@
+{
+  "name": "Beyond Tech Kiosk",
+  "description": "Premium kiosk rental and subscription platform for Beyond Tech, featuring ROI calculator and demo request.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
