@@ -31,7 +31,7 @@ export function Navbar() {
       </div>
 
       <div className="flex items-center gap-6 text-sm font-medium">
-        <a href="#kiosks" className="hidden md:block opacity-70 hover:opacity-100 transition-opacity">{t('nav.models')}</a>
+        <a href="#models" className="hidden md:block opacity-70 hover:opacity-100 transition-opacity">{t('nav.models')}</a>
         <a href="#pricing" className="hidden md:block opacity-70 hover:opacity-100 transition-opacity">{t('nav.pricing')}</a>
         <a href="#roi" className="hidden md:block opacity-70 hover:opacity-100 transition-opacity">{t('nav.roi')}</a>
         

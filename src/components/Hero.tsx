@@ -1,119 +1,161 @@
-import { motion } from "motion/react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
-import { ArrowRight, ShieldCheck, Headset, TrendingUp } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, PlayCircle, ShieldCheck, Headset, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
+
+import img1 from "../assets/images/feature_coffee_shop_kiosk_1784297071417.jpg";
+import img2 from "../assets/images/hero_retail_kiosk_1784298914944.jpg";
+import img3 from "../assets/images/hero_hotel_kiosk_1784298931103.jpg";
 
 export function Hero() {
   const { theme } = useTheme();
   const { language, t } = useLanguage();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      image: img1,
+      title1: t('hero.slide1.title1'),
+      title2: t('hero.slide1.title2'),
+      subtitle: t('hero.slide1.subtitle'),
+    },
+    {
+      image: img2,
+      title1: t('hero.slide2.title1'),
+      title2: t('hero.slide2.title2'),
+      subtitle: t('hero.slide2.subtitle'),
+    },
+    {
+      image: img3,
+      title1: t('hero.slide3.title1'),
+      title2: t('hero.slide3.title2'),
+      subtitle: t('hero.slide3.subtitle'),
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 px-6">
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        {/* Background gradient orb */}
-        <div 
-          className={cn(
-            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[120px]",
-            theme === 'cupertino' ? "bg-blue-400" : "bg-rose-600"
-          )}
-        />
+    <section className="relative min-h-screen w-full flex flex-col lg:flex-row overflow-hidden pt-16">
+      {/* Left Content Half */}
+      <div className={cn(
+        "w-full lg:w-[45%] flex flex-col justify-center px-8 lg:px-20 py-12 lg:py-0 z-10 transition-colors duration-500",
+        theme === 'premium' ? "bg-[#f5f5f7] text-[#1d1d1f]" : "bg-[#1d1d1f] text-[#f5f5f7]"
+      )}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-xl"
+          >
+            {theme === 'premium' && (
+              <div className="mb-8 flex items-center gap-3">
+                 <Logo className="w-8 h-8" />
+                 <div>
+                   <h2 className="text-sm font-bold tracking-widest uppercase" style={{ color: 'var(--color-accent)' }}>
+                     Beyond Tech
+                   </h2>
+                   {language === 'zh' && (
+                     <span className="text-[10px] tracking-[0.4em] opacity-60 font-medium" style={{ color: 'var(--color-primary)' }}>
+                       超越科技
+                     </span>
+                   )}
+                 </div>
+              </div>
+            )}
+
+            <div className="mb-4">
+              <p className="text-sm md:text-base font-semibold opacity-70 mb-2">
+                Beyond Tech Kiosk Solutions
+              </p>
+              <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
+                {slides[currentSlide].title1} <br />
+                <span className="bg-gradient-to-r from-[#D5A13E] to-[#B38728] bg-clip-text text-transparent">
+                  {slides[currentSlide].title2}
+                </span>
+              </h1>
+            </div>
+            
+            <p className="text-base md:text-lg mt-6 mb-10 opacity-70 leading-relaxed max-w-md">
+              {slides[currentSlide].subtitle}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <a 
+                href="#pricing"
+                className={cn(
+                  "px-8 py-3 rounded-md font-medium text-sm transition-all flex items-center justify-center text-white",
+                  "bg-black hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+                )}
+              >
+                {t('hero.startJourney') || '立即购买'}
+              </a>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center pt-12 md:pt-24">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col items-center"
-        >
-          {theme === 'premium' && (
-            <div className="mb-8 flex flex-col items-center justify-center">
-               <Logo className="w-16 h-16 md:w-20 md:h-20 mb-4" />
-               <h2 className="text-xl md:text-2xl font-bold tracking-widest uppercase mb-1" style={{ color: 'var(--color-accent)' }}>
-                 Beyond Tech
-               </h2>
-               {language === 'zh' && (
-                 <span className="text-xs md:text-sm tracking-[0.4em] opacity-60 font-medium" style={{ color: 'var(--color-primary)' }}>
-                   超越科技
-                 </span>
-               )}
-            </div>
-          )}
+      {/* Right Image Half */}
+      <div className="w-full lg:w-[55%] h-[50vh] lg:h-auto relative bg-[#e5e5e5] dark:bg-[#111111]">
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={currentSlide}
+            src={slides[currentSlide].image}
+            alt="Product showcase"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          />
+        </AnimatePresence>
 
-          <h1 className={cn(
-            "text-4xl md:text-7xl font-extrabold tracking-tight mb-4",
-            theme === 'cyber' && "uppercase tracking-tighter"
-          )}>
-            {t('hero.title1')} <br className="hidden md:block" />
-            <span className="text-gold-gradient block mt-2 md:mt-4 text-5xl md:text-8xl">{t('hero.title2')}</span>
-          </h1>
-          
-          <p className="text-base md:text-xl mt-6 mb-12 opacity-70 max-w-2xl mx-auto leading-relaxed">
-            {t('hero.subtitle')}
-          </p>
-
-          <div className="grid grid-cols-3 gap-4 md:gap-12 mb-16 w-full max-w-2xl mx-auto">
-            {[
-              { icon: ShieldCheck, label: 'hero.safe' },
-              { icon: Headset, label: 'hero.support' },
-              { icon: TrendingUp, label: 'hero.growth' }
-            ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center justify-center gap-3">
-                <div className={cn(
-                  "w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center",
-                  theme === 'premium' ? "bg-white shadow-lg border border-zinc-100" : "bg-zinc-900 border border-zinc-800"
-                )}>
-                  <item.icon className="w-6 h-6 md:w-8 md:h-8" style={{ color: 'var(--color-accent)' }} />
-                </div>
-                <span className="text-xs md:text-sm font-semibold opacity-80">{t(item.label)}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-center w-full max-w-md mx-auto mb-16">
-            <a 
-              href="#pricing"
-              className={cn(
-                "w-full px-8 py-5 rounded-2xl font-bold text-lg md:text-xl transition-all flex items-center justify-center gap-3 text-white shadow-[0_8px_30px_rgb(213,161,62,0.3)] hover:shadow-[0_8px_40px_rgb(213,161,62,0.4)] hover:-translate-y-1",
-                theme === 'premium' 
-                  ? "bg-gold-gradient" 
-                  : "bg-gold-gradient"
-              )}
+        {/* Carousel Controls */}
+        <div className="absolute bottom-8 right-8 flex items-center gap-4">
+          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm dark:bg-black/90 px-4 py-2 rounded-full shadow-lg border border-black/5 dark:border-white/10">
+            <button 
+              onClick={prevSlide}
+              className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors text-black dark:text-white"
             >
-              {t('hero.startJourney')} <ArrowRight className="w-6 h-6" />
-            </a>
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <span className="text-sm font-medium px-2 text-black dark:text-white min-w-[3rem] text-center">
+              {currentSlide + 1} / {slides.length}
+            </span>
+            <button 
+              onClick={nextSlide}
+              className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors text-black dark:text-white"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
-
-          {/* Stats Section */}
-          <div className={cn(
-            "w-full max-w-4xl mx-auto rounded-3xl p-8 mb-20",
-            theme === 'premium' ? "bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zinc-100" : "bg-[#121212] border border-zinc-800"
-          )}>
-            <div className="mb-6 text-left">
-              <h3 className="font-bold text-lg opacity-80">{t('stats.title')}</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-              <div className="space-y-1">
-                <div className="text-sm font-medium opacity-70">{t('stats.eff')}</div>
-                <div className="text-3xl font-bold text-gold-gradient">60%+</div>
-                <div className="text-xs opacity-50">{t('stats.effDesc')}</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-sm font-medium opacity-70">{t('stats.cost')}</div>
-                <div className="text-3xl font-bold text-gold-gradient">30%+</div>
-                <div className="text-xs opacity-50">{t('stats.costDesc')}</div>
-              </div>
-              <div className="space-y-1">
-                <div className="text-sm font-medium opacity-70">{t('stats.stable')}</div>
-                <div className="text-3xl font-bold text-gold-gradient">99.9%+</div>
-                <div className="text-xs opacity-50">{t('stats.stableDesc')}</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          
+          <button className="flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black px-5 py-2.5 rounded-full shadow-lg hover:scale-105 transition-transform font-medium text-sm">
+            <span>Play</span>
+            <PlayCircle className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </section>
   );
 }
+

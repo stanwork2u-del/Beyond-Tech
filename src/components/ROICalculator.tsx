@@ -4,11 +4,13 @@ import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
 import { cn } from "@/lib/utils";
 
+const KIOSK_PACKAGES = [199, 299, 329, 359, 399];
+
 export function ROICalculator() {
   const { theme } = useTheme();
   const { t } = useLanguage();
   const [employeeSalary, setEmployeeSalary] = useState<number>(2200);
-  const kioskPrice = 599;
+  const [kioskPrice, setKioskPrice] = useState<number>(199);
 
   const monthlySavings = employeeSalary - kioskPrice;
   const yearlySavings = monthlySavings * 12;
@@ -51,11 +53,47 @@ export function ROICalculator() {
                 </div>
                 
                 <div className={cn(
-                  "p-4 rounded-xl flex justify-between items-center",
+                  "p-4 rounded-xl space-y-3",
                   theme === 'premium' ? "bg-zinc-50" : "bg-zinc-900"
                 )}>
-                  <span className="font-semibold text-sm opacity-70">{t('roi.kiosk')}</span>
-                  <span className="font-bold">RM {kioskPrice} {t('roi.mo')}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-sm opacity-70">{t('roi.kiosk')}</span>
+                    <span className="font-bold text-[#D5A13E]">RM {kioskPrice} {t('roi.mo')}</span>
+                  </div>
+
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="4" 
+                    step="1"
+                    value={KIOSK_PACKAGES.indexOf(kioskPrice)}
+                    onChange={(e) => setKioskPrice(KIOSK_PACKAGES[Number(e.target.value)])}
+                    aria-label="Kiosk Package Price"
+                    className={cn(
+                      "w-full h-2 rounded-lg appearance-none cursor-pointer",
+                      theme === 'premium' ? "bg-zinc-200 accent-[#D5A13E]" : "bg-zinc-800 accent-[#D5A13E]"
+                    )}
+                  />
+
+                  <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                    {KIOSK_PACKAGES.map((price) => (
+                      <button
+                        key={price}
+                        type="button"
+                        onClick={() => setKioskPrice(price)}
+                        className={cn(
+                          "py-1.5 px-0.5 sm:px-1 text-xs font-semibold rounded-lg transition-all border text-center cursor-pointer",
+                          kioskPrice === price
+                            ? "bg-[#D5A13E] text-zinc-950 border-[#D5A13E] shadow-sm font-bold scale-[1.02]"
+                            : theme === 'premium'
+                              ? "bg-white border-zinc-200 text-zinc-700 hover:border-zinc-300 hover:bg-zinc-100"
+                              : "bg-zinc-800/70 border-zinc-700 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 hover:bg-zinc-800"
+                        )}
+                      >
+                        RM {price}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
