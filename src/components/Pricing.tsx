@@ -25,7 +25,7 @@ const plans: Plan[] = [
     annualPrice: "2189",
     originalAnnualPrice: "2388",
     descKey: "pricing.plan1.desc",
-    features: ["feat.pp", "feat.printer58", "feat.support", "feat.rent"],
+    features: ["feat.pp", "feat.tableTop", "feat.printer58", "feat.support", "feat.sys", "feat.rto"],
     featured: false,
   },
   {
@@ -35,7 +35,7 @@ const plans: Plan[] = [
     annualPrice: "3289",
     originalAnnualPrice: "3588",
     descKey: "pricing.plan2.desc",
-    features: ["feat.metal", "feat.printer80", "feat.sys", "feat.pay", "feat.support"],
+    features: ["feat.metal", "feat.tableTop", "feat.printer80", "feat.sys", "feat.pay", "feat.support", "feat.rto"],
     featured: true,
   },
   {
@@ -45,7 +45,7 @@ const plans: Plan[] = [
     annualPrice: "4389",
     originalAnnualPrice: "4788",
     descKey: "pricing.plan3.desc",
-    features: ["feat.metal", "feat.printer80", "feat.sys", "feat.pay", "feat.support", "feat.rto"],
+    features: ["feat.metal", "feat.floorStand", "feat.printer80", "feat.sys", "feat.pay", "feat.support", "feat.rto"],
     featured: false,
   }
 ];
