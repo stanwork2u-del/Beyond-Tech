@@ -38,7 +38,7 @@ export function Footer() {
           <ul className="space-y-4 text-sm opacity-70">
             <li className="flex items-start gap-3 hover:opacity-100 transition-opacity">
               <Phone className="w-4 h-4 mt-1 shrink-0" style={{ color: 'var(--color-primary)' }} />
-              <span>017-7645949</span>
+              <a href="https://wa.me/60177645949" target="_blank" rel="noopener noreferrer" className="hover:underline">017-7645949</a>
             </li>
             <li className="flex items-start gap-3 hover:opacity-100 transition-opacity">
               <Mail className="w-4 h-4 mt-1 shrink-0" style={{ color: 'var(--color-primary)' }} />
